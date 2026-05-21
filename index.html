@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eko Krystianto — Graphic Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===GLOBAL RESET & VARIABLES=== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:    #060E08;
+      --bg-mid:     #0E1A10;
+      --accent:     #84CC16;
+      --accent-dim: #5a8f0f;
+      --text-main:  #E8EFE9;
+      --text-muted: #6B7D6C;
+      --text-faint: #2e3f2f;
+      --border:     rgba(132,204,22,0.12);
+      --border-hover: rgba(132,204,22,0.45);
+      --font-display: 'Playfair Display', serif;
+      --font-body:    'DM Sans', sans-serif;
+      --nav-h:        72px;
+      --radius:       4px;
+      --transition:   0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 99px; }
+    ::selection { background: var(--accent); color: var(--bg-deep); }
+
+    /* ===UTILITY=== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      position: relative;
+      padding-left: 28px;
+    }
+    .section-label::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      width: 18px; height: 1px;
+      background: var(--accent);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text-main);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-deep);
+      border-color: var(--accent);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border-color: rgba(232,239,233,0.25);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Scroll-triggered reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===NAVBAR=== */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: background var(--transition), backdrop-filter var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(6,14,8,0.72);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    #navbar .container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      height: 1.5px;
+      background: var(--text-main);
+      transition: var(--transition);
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile nav overlay */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg-deep);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .nav-mobile.open { opacity: 1; pointer-events: all; }
+    .nav-mobile a {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .nav-mobile a:hover { color: var(--accent); }
+
+    /* ===HERO=== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    /* Botanical grid background */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(132,204,22,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(132,204,22,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-bg-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      opacity: 0.6;
+    }
+    .hero-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    .hero-blob-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(132,204,22,0.07) 0%, transparent 70%);
+      top: -100px; right: -100px;
+    }
+    .hero-blob-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(132,204,22,0.04) 0%, transparent 70%);
+      bottom: 50px; left: 10%;
+    }
+
+    /* Big decorative number */
+    .hero-number {
+      position: absolute;
+      right: -0.02em;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(180px, 22vw, 320px);
+      font-weight: 900;
+      font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(132,204,22,0.06);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+    .hero-eyebrow-line {
+      width: 40px; height: 1px;
+      background: var(--accent);
+    }
+    .hero-eyebrow-text {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.35s forwards;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.8;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.65s forwards;
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+      cursor: pointer;
+    }
+    .hero-scroll-hint span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1px solid var(--accent);
+      border-bottom: 1px solid var(--accent);
+      transform: rotate(45deg);
+      animation: bounce 1.8s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* ===ABOUT=== */
+    #about {
+      padding: 120px 0;
+      position: relative;
+    }
+    #about::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-frame {
+      position: relative;
+      display: inline-block;
+    }
+    .about-img-frame::before {
+      content: '';
+      position: absolute;
+      inset: -10px -10px 10px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      z-index: 0;
+    }
+    .about-img-frame img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 380px;
+      display: block;
+      border-radius: var(--radius);
+      filter: grayscale(20%) contrast(1.05);
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      z-index: 2;
+      background: var(--accent);
+      color: var(--bg-deep);
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .about-badge-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 900;
+      display: block;
+    }
+    .about-badge-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-bio {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 40px;
+    }
+    .about-bio p + p { margin-top: 16px; }
+    .about-strengths {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 44px;
+    }
+    .strength-card {
+      background: var(--bg-mid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      transition: var(--transition);
+    }
+    .strength-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+    }
+    .strength-icon {
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .strength-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .strength-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .about-stats {
+      display: flex;
+      gap: 32px;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ===SERVICES=== */
+    #services {
+      padding: 120px 0;
+      background: var(--bg-mid);
+      position: relative;
+    }
+    #services::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      gap: 40px;
+    }
+    .services-note {
+      max-width: 280px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      text-align: right;
+    }
+    .services-note a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 44px 40px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent);
+      transition: height var(--transition);
+    }
+    .service-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(132,204,22,0.06);
+    }
+    .service-card:hover::before { height: 100%; }
+    .service-icon {
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .service-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .service-features li::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===PROCESS=== */
+    #process {
+      padding: 120px 0;
+    }
+    #process::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+    }
+    .process-header { margin-bottom: 72px; }
+    .process-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+    }
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(12.5% + 0px);
+      right: calc(12.5% + 0px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-dim), var(--text-faint));
+      z-index: 0;
+    }
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .process-num-wrap {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--bg-mid);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      position: relative;
+      transition: var(--transition);
+    }
+    .process-step:hover .process-num-wrap {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .process-step:hover .process-num-wrap svg { color: var(--bg-deep); }
+    .process-num-wrap svg { color: var(--accent); transition: color var(--transition); }
+    .process-num-badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      width: 20px; height: 20px;
+      background: var(--accent);
+      color: var(--bg-deep);
+      border-radius: 50%;
+      font-size: 0.6rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .process-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .process-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ===PORTFOLIO=== */
+    #portfolio {
+      padding: 120px 0;
+      background: var(--bg-mid);
+      position: relative;
+    }
+    #portfolio::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .portfolio-header { margin-bottom: 48px; }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .filter-btn {
+      padding: 8px 20px;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent);
+      color: var(--bg-deep);
+      border-color: var(--accent);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .portfolio-card {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .portfolio-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .portfolio-card[data-hidden="true"] {
+      display: none;
+    }
+    .portfolio-thumb {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/2;
+    }
+    .portfolio-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      filter: grayscale(20%);
+    }
+    .portfolio-card:hover .portfolio-thumb img {
+      transform: scale(1.05);
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(6,14,8,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-info {
+      padding: 24px;
+    }
+    .portfolio-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border-hover);
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .portfolio-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .portfolio-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===TESTIMONIALS=== */
+    #testimonials {
+      padding: 120px 0;
+      position: relative;
+    }
+    #testimonials::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .testi-header { margin-bottom: 60px; }
+    .testi-slider-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    .testi-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .testi-card {
+      flex: 0 0 calc(33.333% - 16px);
+      background: var(--bg-mid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      position: relative;
+    }
+    .testi-quote-icon {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(132,204,22,0.08);
+      position: absolute;
+      top: 16px; right: 24px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .testi-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 18px;
+      color: var(--accent);
+    }
+    .testi-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .testi-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      filter: grayscale(30%);
+    }
+    .testi-name {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+    .testi-role {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .testi-nav {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 36px;
+    }
+    .testi-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .testi-dot.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      width: 24px;
+      border-radius: 99px;
+    }
+
+    /* ===CONTACT=== */
+    #contact {
+      padding: 120px 0;
+      background: var(--bg-mid);
+      position: relative;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .contact-left {}
+    .contact-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .contact-headline em { color: var(--accent); font-style: italic; }
+    .contact-subtext {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      max-width: 420px;
+    }
+    .contact-info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-info-icon {
+      width: 42px; height: 42px;
+      border-radius: var(--radius);
+      background: rgba(132,204,22,0.08);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+    .contact-info-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .contact-info-value {
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+    .contact-info-value a {
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .contact-info-value a:hover { color: var(--accent); }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .cta-card {
+      background: var(--bg-deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .cta-card:hover {
+      border-color: var(--border-hover);
+    }
+    .cta-card-icon { color: var(--accent); margin-bottom: 16px; }
+    .cta-card-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .cta-card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: #25D366;
+      color: #fff;
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+    .wa-btn:hover {
+      background: #1ebe5a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.25);
+    }
+    .availability-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      background: rgba(132,204,22,0.06);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .availability-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(132,204,22,0.4); }
+      50%       { box-shadow: 0 0 0 6px rgba(132,204,22,0); }
+    }
+    .availability-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .availability-text strong { color: var(--accent); font-weight: 500; }
+
+    /* ===FOOTER=== */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-left {}
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-tagline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-nav a {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    .footer-nav a:hover { color: var(--accent); }
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+    }
+    .social-link {
+      width: 38px; height: 38px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .social-link:hover {
+      border-color: var(--border-hover);
+      color: var(--accent);
+    }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* ===RESPONSIVE=== */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 60px; }
+      .about-img-wrap { max-width: 380px; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .services-note { text-align: left; max-width: 100%; }
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .footer-right { align-items: flex-start; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-mobile { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .process-timeline {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .process-timeline::before { display: none; }
+      .process-step {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .process-num-wrap { flex-shrink: 0; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .testi-card { flex: 0 0 calc(100% - 0px); }
+      .about-strengths { grid-template-columns: 1fr; }
+      .about-stats { flex-wrap: wrap; gap: 24px; }
+      .hero-headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; justify-content: center; }
+      .filter-tabs { gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===NAVBAR=== -->
+<nav id="navbar">
+  <div class="container">
+    <a href="#hero" class="nav-logo">Eko <span>K.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about"        data-target="about">Tentang</a></li>
+      <li><a href="#services"     data-target="services">Layanan</a></li>
+      <li><a href="#process"      data-target="process">Cara Kerja</a></li>
+      <li><a href="#portfolio"    data-target="portfolio">Proyek</a></li>
+      <li><a href="#contact"      data-target="contact" class="btn btn-primary" style="padding:9px 20px;font-size:0.78rem;">Kontak</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="nav-mobile" id="navMobile">
+  <a href="#about"     class="mobile-link">Tentang</a>
+  <a href="#services"  class="mobile-link">Layanan</a>
+  <a href="#process"   class="mobile-link">Cara Kerja</a>
+  <a href="#portfolio" class="mobile-link">Proyek</a>
+  <a href="#contact"   class="mobile-link">Kontak</a>
+</div>
+
+
+<!-- ===HERO=== -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-noise"></div>
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+  </div>
+  <div class="hero-number">5+</div>
+
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Graphic Designer · Jakarta</span>
+      </div>
+      <h1 class="hero-headline">
+        Mengubah Ide<br>Menjadi Visual yang<br><em>Berkesan.</em>
+      </h1>
+      <p class="hero-sub">
+        Graphic Designer dengan 5+ tahun pengalaman di agency kreatif dan brand ternama. Spesialisasi dalam brand identity, desain cetak, dan visual marketing yang bercerita.
+      </p>
+      <div class="hero-cta">
+        <a href="#services" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Lihat Layanan
+        </a>
+        <a href="#contact" class="btn btn-outline">Hubungi Saya</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+
+<!-- ===ABOUT=== -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-img-wrap reveal">
+        <div class="about-img-frame">
+          <img src="https://placehold.co/400x480/0E1A10/84CC16?text=EK" alt="Eko Krystianto" loading="lazy" />
+          <div class="about-badge">
+            <span class="about-badge-num">5+</span>
+            <span class="about-badge-label">Tahun<br>Pengalaman</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <div class="reveal">
+          <span class="section-label">Tentang Saya</span>
+          <h2 class="section-title" style="margin-bottom:28px;">Desain bukan sekadar estetika — <em style="color:var(--accent);font-style:italic;">ia bercerita.</em></h2>
+        </div>
+        <div class="about-bio reveal reveal-delay-1">
+          <p>Halo! Saya Eko Krystianto, seorang Graphic Designer berbasis di Jakarta dengan lebih dari 5 tahun pengalaman di industri kreatif. Perjalanan saya dimulai dari agency kreatif, lalu berkembang bersama brand-brand ternama lintas industri.</p>
+          <p>Saya percaya bahwa desain yang baik adalah desain yang berkomunikasi — bukan sekadar indah dipandang, tetapi mampu menyampaikan nilai, karakter, dan cerita sebuah brand kepada audiensnya dengan tepat dan berkesan.</p>
+          <p>Setiap proyek adalah kesempatan baru untuk mengeksplorasi, dan saya membawa pendekatan yang terstruktur sekaligus penuh kreativitas ke dalam setiap pekerjaan.</p>
+        </div>
+
+        <div class="about-strengths reveal reveal-delay-2">
+          <div class="strength-card">
+            <div class="strength-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="strength-title">Brand Identity</div>
+            <div class="strength-desc">Membangun identitas visual yang kuat, konsisten, dan memorable untuk brand.</div>
+          </div>
+          <div class="strength-card">
+            <div class="strength-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7V4h3"/><path d="M17 4h3v3"/><path d="M4 17v3h3"/><path d="M17 20h3v-3"/><path d="M9 8h6"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
+            </div>
+            <div class="strength-title">Tipografi</div>
+            <div class="strength-desc">Penguasaan tipografi yang presisi, estetis, dan diselaraskan dengan karakter brand.</div>
+          </div>
+          <div class="strength-card">
+            <div class="strength-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="strength-title">Creative Direction</div>
+            <div class="strength-desc">Mengarahkan konsep visual dari brief awal hingga eksekusi final yang kohesif.</div>
+          </div>
+        </div>
+
+        <div class="about-stats reveal reveal-delay-3">
+          <div class="stat-item">
+            <div class="stat-num">50<span>+</span></div>
+            <div class="stat-label">Proyek Selesai</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">30<span>+</span></div>
+            <div class="stat-label">Klien Puas</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">12<span>+</span></div>
+            <div class="stat-label">Industri</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===SERVICES=== -->
+<section id="services">
+  <div class="container">
+    <div class="services-header reveal">
+      <div>
+        <span class="section-label">Layanan</span>
+        <h2 class="section-title">Apa yang bisa<br>saya bantu?</h2>
+      </div>
+      <p class="services-note">
+        Punya kebutuhan di luar layanan di bawah? <a href="#contact">Diskusikan bersama saya</a> — saya terbuka untuk kolaborasi kreatif apapun.
+      </p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="service-name">Brand Identity</div>
+        <div class="service-desc">Identitas visual lengkap yang membuat brand Anda dikenali, dipercaya, dan diingat oleh audiens yang tepat.</div>
+        <ul class="service-features">
+          <li>Logo &amp; Sistem Visual</li>
+          <li>Color Palette &amp; Tipografi</li>
+          <li>Stationery Design</li>
+          <li>Brand Guidelines</li>
+        </ul>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="service-name">Desain Cetak</div>
+        <div class="service-desc">Materi cetak berkualitas tinggi yang dirancang dengan presisi untuk memberikan kesan profesional dan impactful.</div>
+        <ul class="service-features">
+          <li>Brosur &amp; Katalog</li>
+          <li>Kemasan Produk</li>
+          <li>Poster &amp; Flyer</li>
+          <li>Annual Report</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===PROCESS=== -->
+<section id="process">
+  <div class="container">
+    <div class="process-header reveal">
+      <span class="section-label">Cara Kerja</span>
+      <h2 class="section-title">Proses yang transparan,<br>hasil yang terduga.</h2>
+    </div>
+    <div class="process-timeline">
+
+      <div class="process-step reveal reveal-delay-1">
+        <div class="process-num-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <div class="process-num-badge">01</div>
+        </div>
+        <div>
+          <div class="process-title">Konsultasi Gratis</div>
+          <div class="process-desc">Cerita kebutuhanmu — kita diskusi tantangan dan tujuan brand secara mendalam.</div>
+        </div>
+      </div>
+
+      <div class="process-step reveal reveal-delay-2">
+        <div class="process-num-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          <div class="process-num-badge">02</div>
+        </div>
+        <div>
+          <div class="process-title">Proposal &amp; Harga</div>
+          <div class="process-desc">Penawaran transparan dengan scope, timeline, dan harga dikirim dalam 1×24 jam.</div>
+        </div>
+      </div>
+
+      <div class="process-step reveal reveal-delay-3">
+        <div class="process-num-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="process-num-badge">03</div>
+        </div>
+        <div>
+          <div class="process-title">Proses Pengerjaan</div>
+          <div class="process-desc">Update berkala dan revisi terstruktur — klien bisa memantau setiap progresnya.</div>
+        </div>
+      </div>
+
+      <div class="process-step reveal reveal-delay-4">
+        <div class="process-num-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div class="process-num-badge">04</div>
+        </div>
+        <div>
+          <div class="process-title">Serah Terima</div>
+          <div class="process-desc">File lengkap semua format dikirim beserta garansi revisi pasca-selesai.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===PORTFOLIO=== -->
+<section id="portfolio">
+  <div class="container">
+    <div class="portfolio-header reveal">
+      <span class="section-label">Proyek</span>
+      <h2 class="section-title">Karya yang<br>berbicara sendiri.</h2>
+    </div>
+
+    <div class="filter-tabs reveal">
+      <button class="filter-btn active" data-filter="all">Semua</button>
+      <button class="filter-btn" data-filter="Brand Identity">Brand Identity</button>
+      <button class="filter-btn" data-filter="Desain Cetak">Desain Cetak</button>
+      <button class="filter-btn" data-filter="Desain Kemasan">Desain Kemasan</button>
+      <button class="filter-btn" data-filter="Creative Direction">Creative Direction</button>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <div class="portfolio-card reveal reveal-delay-1" data-category="Brand Identity">
+        <div class="portfolio-thumb">
+          <img src="https://placehold.co/600x400/0E1A10/84CC16?text=Rebrand+Coffee" alt="Rebrand Coffee Shop" loading="lazy" />
+          <div class="portfolio-overlay">
+            <span class="btn btn-primary" style="pointer-events:none;">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-badge">Brand Identity</span>
+          <div class="portfolio-name">Rebrand Coffee Shop</div>
+          <div class="portfolio-desc">Membangun identitas visual baru untuk coffee shop lokal yang meningkatkan brand recognition 60%.</div>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal reveal-delay-2" data-category="Desain Cetak">
+        <div class="portfolio-thumb">
+          <img src="https://placehold.co/600x400/0E1A10/84CC16?text=Katalog+Fashion" alt="Katalog Fashion" loading="lazy" />
+          <div class="portfolio-overlay">
+            <span class="btn btn-primary" style="pointer-events:none;">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-badge">Desain Cetak</span>
+          <div class="portfolio-name">Katalog Fashion</div>
+          <div class="portfolio-desc">Mendesain katalog koleksi fashion dengan fotografi dan layout premium yang elegan.</div>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal reveal-delay-3" data-category="Desain Kemasan">
+        <div class="portfolio-thumb">
+          <img src="https://placehold.co/600x400/0E1A10/84CC16?text=Packaging+Skincare" alt="Packaging Product" loading="lazy" />
+          <div class="portfolio-overlay">
+            <span class="btn btn-primary" style="pointer-events:none;">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-badge">Desain Kemasan</span>
+          <div class="portfolio-name">Packaging Product</div>
+          <div class="portfolio-desc">Mendesain kemasan produk skincare yang memenangkan award kemasan terbaik 2024.</div>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal reveal-delay-4" data-category="Creative Direction">
+        <div class="portfolio-thumb">
+          <img src="https://placehold.co/600x400/0E1A10/84CC16?text=Visual+Campaign" alt="Visual Campaign" loading="lazy" />
+          <div class="portfolio-overlay">
+            <span class="btn btn-primary" style="pointer-events:none;">Lihat Detail</span>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <span class="portfolio-badge">Creative Direction</span>
+          <div class="portfolio-name">Visual Campaign</div>
+          <div class="portfolio-desc">Mengarahkan campaign visual brand kecantikan dengan 20+ aset visual yang kohesif.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===TESTIMONIALS=== -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testi-header reveal">
+      <span class="section-label">Testimoni</span>
+      <h2 class="section-title">Kata mereka<br>tentang kolaborasi kita.</h2>
+    </div>
+    <div class="testi-slider-wrap reveal">
+      <div class="testi-track" id="testiTrack">
+
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="testi-text">"Eko benar-benar memahami esensi brand kami. Hasil rebranding coffee shop kami jauh melampaui ekspektasi — pelanggan langsung notice perubahannya dan respons sangat positif."</p>
+          <div class="testi-author">
+            <img src="https://placehold.co/60x60/0E1A10/84CC16?text=AR" alt="Andika R." class="testi-avatar" loading="lazy" />
+            <div>
+              <div class="testi-name">Andika Rahmat</div>
+              <div class="testi-role">Owner · Kopi Tanah Merah</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="testi-text">"Katalog fashion kami mendapat banyak pujian dari buyer. Eko sangat detail dalam layout dan pemilihan tipografi — prosesnya pun smooth dengan update yang rutin dan responsif."</p>
+          <div class="testi-author">
+            <img src="https://placehold.co/60x60/0E1A10/84CC16?text=SP" alt="Sinta P." class="testi-avatar" loading="lazy" />
+            <div>
+              <div class="testi-name">Sinta Pramesti</div>
+              <div class="testi-role">Creative Director · Runa Fashion</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="testi-text">"Kemasan skincare kami kini memenangkan award! Eko punya kemampuan luar biasa dalam menyeimbangkan estetika dan fungsionalitas kemasan. Sangat recommended untuk brand yang serius."</p>
+          <div class="testi-author">
+            <img src="https://placehold.co/60x60/0E1A10/84CC16?text=DW" alt="Dwi W." class="testi-avatar" loading="lazy" />
+            <div>
+              <div class="testi-name">Dwi Wulandari</div>
+              <div class="testi-role">Founder · Bening Skincare</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="testi-nav" id="testiNav">
+        <button class="testi-dot active" data-idx="0"></button>
+        <button class="testi-dot" data-idx="1"></button>
+        <button class="testi-dot" data-idx="2"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===CONTACT=== -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="contact-left">
+        <div class="reveal">
+          <span class="section-label">Kontak</span>
+          <h2 class="contact-headline">Ada proyek di<br>pikiran? Mari<br><em>bicara.</em></h2>
+        </div>
+        <p class="contact-subtext reveal reveal-delay-1">
+          Terbuka untuk kolaborasi, brief baru, maupun sekadar diskusi ide. Saya aktif merespons pesan di hari kerja.
+        </p>
+        <ul class="contact-info-list">
+          <li class="contact-info-item reveal reveal-delay-1">
+            <div class="contact-info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Email</div>
+              <div class="contact-info-value"><a href="mailto:eqokreatifa@gmail.com">eqokreatifa@gmail.com</a></div>
+            </div>
+          </li>
+          <li class="contact-info-item reveal reveal-delay-2">
+            <div class="contact-info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.38a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">WhatsApp</div>
+              <div class="contact-info-value"><a href="https://wa.me/6285183285189" target="_blank" rel="noopener">+62 851 8328 5189</a></div>
+            </div>
+          </li>
+          <li class="contact-info-item reveal reveal-delay-3">
+            <div class="contact-info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Lokasi</div>
+              <div class="contact-info-value">Jakarta, WIB (UTC+7)</div>
+            </div>
+          </li>
+          <li class="contact-info-item reveal reveal-delay-4">
+            <div class="contact-info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="contact-info-label">Jam Kerja</div>
+              <div class="contact-info-value">Senin – Jumat, 09.00 – 18.00</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-right reveal reveal-delay-2">
+        <div class="cta-card">
+          <div class="cta-card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="cta-card-title">Chat Langsung</div>
+          <div class="cta-card-desc">Respons lebih cepat via WhatsApp — biasanya balas dalam 1–2 jam di jam kerja.</div>
+          <a href="https://wa.me/6285183285189" target="_blank" rel="noopener" class="wa-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Chat via WhatsApp
+          </a>
+        </div>
+        <div class="availability-badge">
+          <div class="availability-dot"></div>
+          <div class="availability-text">Tersedia untuk proyek baru — <strong>open for freelance</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ===FOOTER=== -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">Eko <span>Krystianto</span></div>
+        <div class="footer-tagline">Mengubah ide menjadi visual yang berkesan.</div>
+      </div>
+      <nav class="footer-nav">
+        <a href="#about">Tentang</a>
+        <a href="#services">Layanan</a>
+        <a href="#process">Cara Kerja</a>
+        <a href="#portfolio">Proyek</a>
+        <a href="#contact">Kontak</a>
+      </nav>
+      <div class="footer-right">
+        <div class="footer-social">
+          <!-- Instagram -->
+          <a href="https://instagram.com/eqokreatifa" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com/in/kryztinto" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div class="footer-copy">© 2026 Eko Krystianto. All rights reserved.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  /* ===NAVBAR SCROLL=== */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  /* ===HAMBURGER MENU=== */
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('navMobile');
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.classList.toggle('open');
+    navMobile.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navMobile.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ===ACTIVE NAV via IntersectionObserver=== */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a[data-target]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navAnchors.forEach(a => {
+          a.classList.toggle('active', a.dataset.target === entry.target.id);
+        });
+      }
+    });
+  }, { threshold: 0.35, rootMargin: '-60px 0px -40% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  /* ===SCROLL REVEAL=== */
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  /* ===PORTFOLIO FILTER=== */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioCards = document.querySelectorAll('.portfolio-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      portfolioCards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.style.display = match ? 'block' : 'none';
+        if (match) {
+          card.style.animation = 'none';
+          card.offsetHeight; // reflow
+          card.style.animation = '';
+        }
+      });
+    });
+  });
+
+  /* ===TESTIMONIALS SLIDER=== */
+  const track = document.getElementById('testiTrack');
+  const dots = document.querySelectorAll('.testi-dot');
+  let current = 0;
+
+  function goTo(idx) {
+    const cards = track.querySelectorAll('.testi-card');
+    const isMobile = window.innerWidth <= 768;
+    const offset = isMobile ? idx * (track.firstElementChild.offsetWidth + 24) : 0;
+    track.style.transform = isMobile ? `translateX(-${offset}px)` : 'none';
+    current = idx;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => goTo(parseInt(dot.dataset.idx)));
+  });
+
+  // Auto-slide on mobile only
+  let autoSlide = setInterval(() => {
+    if (window.innerWidth <= 768) {
+      goTo((current + 1) % dots.length);
+    }
+  }, 4000);
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      track.style.transform = 'none';
+    } else {
+      goTo(current);
+    }
+  });
+
+  /* ===SMOOTH SCROLL FALLBACK=== */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
